@@ -38,10 +38,10 @@ public class DecryptData {
 
     public String decryptData(String username) {
         try {
-            byte[] bytes = privateKey.getBytes("UTF-8");
+            byte[] bytes = Base64.getDecoder().decode(privateKey);
 //            System.out.println(bytes);
         // Tạo private key
-//            PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(bytes);
+            PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(bytes);
 
 //            System.out.println(privateKey.getBytes());
 
@@ -56,7 +56,7 @@ public class DecryptData {
 //            PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(b);
 
             KeyFactory factory = KeyFactory.getInstance("RSA");
-            PrivateKey privKey = factory.generatePrivate(new PKCS8EncodedKeySpec(getPrivateKey().getBytes()));
+            PrivateKey privKey = factory.generatePrivate(spec);
 
             // Giải mã dữ liệu
             Cipher cipher = Cipher.getInstance("RSA");
